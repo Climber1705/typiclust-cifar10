@@ -1,11 +1,4 @@
-"""
-Backwards-compatible exports for config dataclasses.
-
-Dataclasses now live in `configs.schema` so that parsing/IO concerns can be kept separate
-from the config schema definition.
-"""
-
-from configs.schema import (  # noqa: F401
+from .schema import (
     AugmentationConfig,
     ClusterConfig,
     Config,
