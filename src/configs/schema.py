@@ -56,8 +56,8 @@ class ClusterConfig:
 @dataclass
 class Configs:
     config: Config
-    augmentation_config: AugmentationConfig
-    training_config: TrainingConfig
-    evaluation_config: EvaluationConfig
-    cluster_config: ClusterConfig
+    augmentation: AugmentationConfig
+    training: TrainingConfig
+    evaluation: EvaluationConfig
+    cluster: ClusterConfig
 
