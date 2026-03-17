@@ -1,7 +1,7 @@
 import torch
 from pathlib import Path
 
-from configs import (
+from src.configs import (
     Config,
     AugmentationConfig,
     TrainingConfig,
@@ -9,10 +9,11 @@ from configs import (
     ClusterConfig,
     Configs,
 )
-from utils import load_yaml
+from src.utils.load_yaml import load_yaml
 
 def load_config(config_path: Path) -> Configs:
-    data = load_yaml(Path(config_path))
+    path = Path(config_path)
+    data = load_yaml(path)
 
     config_data = dict(data["config"])
     if config_data.get("device") is None:
