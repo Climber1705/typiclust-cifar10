@@ -2,7 +2,7 @@ import torch
 import torchvision.transforms as transforms
 from typing import List
 
-from configs import AugmentationConfig
+from src.configs import AugmentationConfig
 
 class StochasticDataAugmentation:
     def __init__(self, base_transform: transforms.Compose, num_views: int = 2) -> None:
