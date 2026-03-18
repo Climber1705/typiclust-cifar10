@@ -8,7 +8,7 @@ from src.datasets import SimCLRDataset, get_contrastive_base_transform
 from src.training import train_simclr
 from src.utils import load_config, build_loader
 
-def parse_args():
+def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--config",
@@ -18,7 +18,7 @@ def parse_args():
     )
     return parser.parse_args()
 
-def train_simclr_pipeline(args):
+def train_simclr_pipeline(args: argparse.Namespace) -> None:
     config = load_config(args.config)
     device = torch.device(config.config.device)
     print(f"Using device: {device}")
