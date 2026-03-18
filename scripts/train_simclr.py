@@ -60,7 +60,7 @@ def train_simclr_pipeline(args):
         epochs=config.training.epochs
     )
 
-    model_path = Path(config.config.model_directory) / config.config.simclr_model_name
+    model_path = Path(config.config.model_directory) / config.config.representation_model_name
     torch.save(model.state_dict(), str(model_path))
 
 
