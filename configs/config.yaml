@@ -1,8 +1,8 @@
 config:
   seed: 42
   device: null
-  data_directory: "../data"
-  model_directory: "../models"
+  data_directory: "data"
+  model_directory: "models"
   representation_model_name: "simclr_cifar10.pth"
 
 # Augmentation
