@@ -7,8 +7,8 @@ from typing import Tuple
 class Config:
     seed: int
     device: str = "cuda" if torch.cuda.is_available() else "cpu"
-    data_directory: str = "../data"
-    model_directory: str = "../models"
+    data_directory: str = "data"
+    model_directory: str = "models"
     representation_model_name: str = "simclr_cifar10_dev.pth"
 
 
