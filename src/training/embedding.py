@@ -11,6 +11,7 @@ def build_embeddings(
     loader: DataLoader,
     device: torch.device,
 ) -> Tuple[np.ndarray, np.ndarray]:
+    model = model.to(device)
     model.eval()
     
     embeddings = []
