@@ -1,7 +1,7 @@
-from .load_config import load_config
-from .load_dataloader import build_loader
-from .load_model import load_model
-from .load_yaml import load_yaml
+from .config_loader import load_config
+from .dataloader import build_loader
+from .model_loader import load_model
+from .yaml_loader import load_yaml
 from .seed import set_seed
 
 __all__ = [

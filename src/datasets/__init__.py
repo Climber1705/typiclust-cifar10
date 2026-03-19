@@ -4,7 +4,7 @@ from .augmentation import (
     get_embedding_transform,
     get_classifier_train_transform,
 )
-from .simclr_dataset import SimCLRDataset
+from .simclr import SimCLRDataset
 
 __all__ = [
     "SimCLRDataset",

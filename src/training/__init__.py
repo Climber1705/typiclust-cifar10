@@ -1,5 +1,5 @@
 from .embedding import build_embeddings
-from .simclr_train import train_simclr
+from .train import train_simclr
 
 __all__ = [
     "build_embeddings",

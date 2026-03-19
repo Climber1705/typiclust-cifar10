@@ -6,6 +6,7 @@ from .schema import (
     EvaluationConfig,
     TrainingConfig,
 )
+from .state import State
 
 __all__ = [
     "Config",
@@ -14,4 +15,5 @@ __all__ = [
     "EvaluationConfig",
     "ClusterConfig",
     "Configs",
+    "State",
 ]

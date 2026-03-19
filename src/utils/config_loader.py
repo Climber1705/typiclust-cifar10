@@ -1,7 +1,7 @@
 import torch
 from pathlib import Path
 
-from src.configs import (
+from src.config import (
     Config,
     AugmentationConfig,
     TrainingConfig,
@@ -9,7 +9,7 @@ from src.configs import (
     ClusterConfig,
     Configs,
 )
-from src.utils.load_yaml import load_yaml
+from src.utils.yaml_loader import load_yaml
 
 def load_config(config_path: Path) -> Configs:
     path = Path(config_path)
