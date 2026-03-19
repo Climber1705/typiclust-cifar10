@@ -19,7 +19,13 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 def train_simclr_pipeline(args: argparse.Namespace) -> None:
+    project_root = Path(__file__).resolve().parent.parent
+    
     config = load_config(args.config)
+
+    data_directory = (project_root / config.config.data_directory).resolve()
+    model_directory = (project_root / config.config.model_directory).resolve()
+    
     device = torch.device(config.config.device)
     print(f"Using device: {device}")
 
@@ -38,8 +44,9 @@ def train_simclr_pipeline(args: argparse.Namespace) -> None:
     )
     criterion = SimCLRLoss()
 
+    data_directory.mkdir(parents=True, exist_ok=True)
     train_dataset = SimCLRDataset(
-        root=config.config.data_directory,
+        root=str(data_directory),
         train=True,
         transform=get_contrastive_base_transform(config.augmentation)
     )
@@ -60,7 +67,8 @@ def train_simclr_pipeline(args: argparse.Namespace) -> None:
         epochs=config.training.epochs
     )
 
-    model_path = Path(config.config.model_directory) / config.config.representation_model_name
+    model_directory.mkdir(parents=True, exist_ok=True)
+    model_path = model_directory / config.config.representation_model_name
     torch.save(model.state_dict(), str(model_path))
 
 
