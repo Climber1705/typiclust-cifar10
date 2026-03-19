@@ -4,7 +4,7 @@ from sklearn.metrics import pairwise_distances
 
 from src.config import State
 from src.strategies.base import Strategy
-from src.active_learning import get_unlabeled_pool
+from src.al import get_unlabeled_pool
 
 
 class CoreSetStrategy(Strategy):

@@ -3,7 +3,7 @@ from typing import List
 
 from src.config import State
 from src.strategies.base import Strategy
-from src.active_learning import get_unlabeled_pool, get_softmax_scores
+from src.al import get_unlabeled_pool, get_softmax_scores
 
 class EntropyStrategy(Strategy):
     def query(self, state: State, budget: int) -> List[int]:

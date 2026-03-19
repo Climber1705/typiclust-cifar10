@@ -2,7 +2,7 @@ import random
 from typing import List
 
 from src.config import State
-from src.active_learning import get_unlabeled_pool
+from src.al import get_unlabeled_pool
 from src.strategies.base import Strategy
 
 class RandomStrategy(Strategy):

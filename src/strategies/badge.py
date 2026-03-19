@@ -2,7 +2,7 @@ from typing import List
 
 from src.config import State
 from src.strategies.base import Strategy
-from src.active_learning import get_unlabeled_pool, get_gradient_embeddings, kmeans_plus_plus_seeding
+from src.al import get_unlabeled_pool, get_gradient_embeddings, kmeans_plus_plus_seeding
 
 
 class BADGEStrategy(Strategy):
