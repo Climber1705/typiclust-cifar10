@@ -20,11 +20,17 @@ def parse_args() -> argparse.Namespace:
 
 def build_embeddings_pipeline(args: argparse.Namespace) -> None:
     config = load_config(args.config)
-    model = load_model(config.config.model_directory / config.config.representation_model_name)
+
+    project_root = Path(__file__).resolve().parent.parent
+    data_directory = (project_root / config.config.data_directory).resolve()
+    model_directory = (project_root / config.config.model_directory).resolve()
+    model_path = model_directory / config.config.representation_model_name
+
+    model = load_model(str(model_path))
     device = torch.device(config.config.device)
     
     embedding_dataset = torchvision.datasets.CIFAR10(
-        root=config.config.data_directory,
+        root=str(data_directory),
         train=True,
         download=True,
         transform=get_embedding_transform(config.augmentation)
@@ -42,8 +48,8 @@ def build_embeddings_pipeline(args: argparse.Namespace) -> None:
         device=device
     )
 
-    np.save(Path(config.config.data_directory) / "embeddings.npy", all_embeddings)
-    np.save(Path(config.config.data_directory) / "labels.npy", all_labels)
+    np.save(data_directory / "embeddings.npy", all_embeddings)
+    np.save(data_directory / "labels.npy", all_labels)
 
     print(f"Embeddings: {all_embeddings.shape}, Labels: {all_labels.shape}")
 
