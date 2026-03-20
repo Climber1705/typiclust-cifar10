@@ -6,7 +6,7 @@ import torch.nn.functional as F
 from torch.utils.data import Dataset, Subset
 
 from src.config import EvaluationConfig
-from src.utils.training_utils import build_resnet18_classifier
+from src.training.classifier.utils import build_resnet18_classifier
 from src.utils import build_loader
 
 def train_classifier(
