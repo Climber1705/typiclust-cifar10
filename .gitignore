@@ -9,3 +9,7 @@ __pycache__/
 # Models
 /models/*
 !models/.gitkeep
+
+# Figures
+/figures/*
+!figures/.gitkeep
