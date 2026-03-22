@@ -1,13 +1,12 @@
 import torch
 import argparse
 import torch.optim as optim
-from pathlib import Path
 
 from src.config import load_config
 from src.data import SimCLRDataset, get_contrastive_base_transform
 from src.model import SimCLRModel, SimCLRLoss
 from src.training import train_simclr
-from src.utils import build_loader, set_seed
+from src.utils import build_loader, set_seed, get_directories
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
@@ -20,14 +19,11 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 def train_simclr_pipeline(args: argparse.Namespace) -> None:
-    project_root = Path(__file__).resolve().parent.parent
-    
     config = load_config(args.config)
 
     set_seed(config.seed)
 
-    data_directory = (project_root / config.paths.data_directory).resolve()
-    model_directory = (project_root / config.paths.model_directory).resolve()
+    data_directory, model_directory = get_directories(config)
     
     device = torch.device(config.device)
     print(f"Using device: {device}")
