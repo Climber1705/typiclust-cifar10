@@ -1,12 +1,14 @@
-config:
-  seed: 42
-  device: null
+seed: 42
+device: null
+
+paths:
   data_directory: "data"
   model_directory: "models"
   representation_model_name: "simclr_cifar10.pth"
 
 # Augmentation
 augmentation:
+  num_views: 2
   size: 32
   scale: [0.2, 1.0]
   p_random_horizontal_flip: 0.5
