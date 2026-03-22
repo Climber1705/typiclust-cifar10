@@ -3,10 +3,11 @@ import argparse
 import torch.optim as optim
 from pathlib import Path
 
-from src.models import SimCLRModel, SimCLRLoss
-from src.datasets import SimCLRDataset, get_contrastive_base_transform
+from src.config import load_config
+from src.data import SimCLRDataset, get_contrastive_base_transform
+from src.model import SimCLRModel, SimCLRLoss
 from src.training import train_simclr
-from src.utils import load_config, build_loader
+from src.utils import build_loader, set_seed
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
@@ -23,10 +24,12 @@ def train_simclr_pipeline(args: argparse.Namespace) -> None:
     
     config = load_config(args.config)
 
-    data_directory = (project_root / config.config.data_directory).resolve()
-    model_directory = (project_root / config.config.model_directory).resolve()
+    set_seed(config.seed)
+
+    data_directory = (project_root / config.paths.data_directory).resolve()
+    model_directory = (project_root / config.paths.model_directory).resolve()
     
-    device = torch.device(config.config.device)
+    device = torch.device(config.device)
     print(f"Using device: {device}")
 
     model = SimCLRModel().to(device)
@@ -47,8 +50,9 @@ def train_simclr_pipeline(args: argparse.Namespace) -> None:
     data_directory.mkdir(parents=True, exist_ok=True)
     train_dataset = SimCLRDataset(
         root=str(data_directory),
+        transform=get_contrastive_base_transform(config.augmentation),
         train=True,
-        transform=get_contrastive_base_transform(config.augmentation)
+        download=True,
     )
     train_loader = build_loader(
         dataset=train_dataset,
@@ -68,7 +72,7 @@ def train_simclr_pipeline(args: argparse.Namespace) -> None:
     )
 
     model_directory.mkdir(parents=True, exist_ok=True)
-    model_path = model_directory / config.config.representation_model_name
+    model_path = model_directory / config.paths.representation_model_name
     torch.save(model.state_dict(), str(model_path))
 
 
