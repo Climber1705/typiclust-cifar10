@@ -26,7 +26,7 @@ def plot_results(args: argparse.Namespace) -> None:
     figures_directory = project_root / "figures"
     figures_directory.mkdir(parents=True, exist_ok=True)
 
-    df = pd.read_csv(data_directory / "al_results.csv")
+    df = pd.read_csv(data_directory / f"al_results_{config.cluster.B}.csv")
 
     plot_active_learning_results(df, figures_directory / f"al_results_{config.cluster.B}.png")
     plot_final_accuracy_results(df, figures_directory / f"final_accuracy_results_{config.cluster.B}.png")
