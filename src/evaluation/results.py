@@ -22,4 +22,4 @@ def save_results(all_results: Dict[str, Any], data_directory: Path, budget_per_r
             })
 
     df = pd.DataFrame(rows)
-    df.to_csv(data_directory / "al_results.csv", index=False)
+    df.to_csv(data_directory / f"al_results_{budget_per_round}.csv", index=False)
