@@ -17,7 +17,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--config",
         type=str,
-        default="configs/config.yaml",
+        default="configs/config_B10.yaml",
         help="Path to the config file"
     )
     return parser.parse_args()
