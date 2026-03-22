@@ -18,7 +18,7 @@ def load_config(path: Union[str, Path]) -> Config:
 
     return Config(
         seed=raw["seed"],
-        device=torch.device(raw.get("device", "cuda" if torch.cuda.is_available() else "cpu")),
+        device=torch.device("cuda" if torch.cuda.is_available() else "cpu"),
 
         paths=PathsConfig(
             data_directory=raw["paths"]["data_directory"],

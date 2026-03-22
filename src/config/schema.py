@@ -1,5 +1,6 @@
+import torch
 from dataclasses import dataclass
-from typing import Optional, Tuple
+from typing import Tuple
 
 @dataclass
 class PathsConfig:
@@ -48,7 +49,7 @@ class ClusterConfig:
 @dataclass
 class Config:
     seed: int
-    device: Optional[str]
+    device: torch.device
     paths: PathsConfig
     augmentation: AugmentationConfig
     training: TrainingConfig
