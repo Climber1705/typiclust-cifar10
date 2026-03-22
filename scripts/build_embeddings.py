@@ -5,8 +5,9 @@ import numpy as np
 from pathlib import Path
 
 from src.config import load_config
-from src.datasets import get_embedding_transform
-from src.training import build_embeddings
+from src.data import get_embedding_transform
+from src.model import load_model
+from src.embeddings import build_embeddings
 from src.utils import build_loader, set_seed
 
 def parse_args() -> argparse.Namespace:
@@ -21,14 +22,14 @@ def parse_args() -> argparse.Namespace:
 
 def build_embeddings_pipeline(args: argparse.Namespace) -> None:
     config = load_config(args.config)
+    device = torch.device(config.device)
 
     project_root = Path(__file__).resolve().parent.parent
     data_directory = (project_root / config.paths.data_directory).resolve()
     model_directory = (project_root / config.paths.model_directory).resolve()
     model_path = model_directory / config.paths.representation_model_name
 
-    model = load_model(str(model_path))
-    device = torch.device(config.device)
+    model = load_model(model_path, device=device)
 
     set_seed(config.seed)
 
