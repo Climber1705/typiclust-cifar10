@@ -1,4 +1,15 @@
-from src.active_learning.strategies import *
+from src.active_learning.strategies import (
+    BADGEStrategy,
+    BALDStrategy,
+    CoreSetStrategy,
+    DBALStrategy,
+    EntropyStrategy,
+    MarginStrategy,
+    RandomStrategy,
+    TypiclustStrategy,
+    UncertaintyStrategy,
+)
+
 
 def build_strategies(config):
     return {
@@ -7,12 +18,12 @@ def build_strategies(config):
             max_clusters=config.cluster.max_clusters,
             min_cluster_size=config.cluster.min_cluster_size,
         ),
-        "Random": RandomStrategy,
-        #"Uncertainty": UncertaintyStrategy,
-        #"Margin": MarginStrategy,
-        #"Entropy": EntropyStrategy,
-       # "DBAL": DBALStrategy,
-        #"CoreSet": CoreSetStrategy,
-        #"BALD": BALDStrategy,
-        #"BADGE": BADGEStrategy,
+        "Random": lambda: RandomStrategy(),
+        "Uncertainty": lambda: UncertaintyStrategy(),
+        "Margin": lambda: MarginStrategy(),
+        "Entropy": lambda: EntropyStrategy(),
+        "DBAL": lambda: DBALStrategy(),
+        "CoreSet": lambda: CoreSetStrategy(),
+        "BALD": lambda: BALDStrategy(),
+        "BADGE": lambda: BADGEStrategy(),
     }
