@@ -25,7 +25,7 @@ def query_strategy(
 ) -> List[int]:
     B = config.cluster.B
 
-    if name in NEEDS_COLD_START and len(strategy.labeled) == 0:
+    if name in NEEDS_COLD_START and len(state.labeled) == 0:
         return RandomStrategy().query(state, B, device)
 
     if name in NEEDS_MODEL:
@@ -36,7 +36,7 @@ def query_strategy(
 
         state.model = train_classifier(
             config=config.evaluation,
-            labeled_indices=list(strategy.labeled),
+            labeled_indices=list(state.labeled),
             train_dataset=train_dataset,
             device=device,
             model_override=model,
