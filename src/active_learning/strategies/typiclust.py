@@ -47,8 +47,7 @@ class TypiclustStrategy(Strategy):
         cluster_ids = [c for c in np.unique(cluster_labels) if c >= 0]
 
         labeled_counts = {c: int(labeled_mask[cluster_labels == c].sum()) for c in cluster_ids}
-        cluster_sizes = {c: int((cluster_labels == c).sum()) for c in cluster_ids
-}
+        cluster_sizes = {c: int((cluster_labels == c).sum()) for c in cluster_ids}
 
         min_labeled = min(labeled_counts.values())
 
@@ -93,14 +92,15 @@ class TypiclustStrategy(Strategy):
             chosen_cluster = max(eligible, key=lambda c: cluster_sizes[c])
 
             members = np.array(cluster_to_indices[chosen_cluster])
-            unlabeled_members = members[~labeled_mask[members]]
+            unlabeled_member_mask = ~labeled_mask[members]
 
-            if len(unlabeled_members) == 0:
+            if not unlabeled_member_mask.any():
                 cluster_labels[cluster_labels == chosen_cluster] = -1
                 continue
 
-            scores = self._compute_typicality(embeddings[unlabeled_members])
-            chosen_idx = int(unlabeled_members[np.argmax(scores)])
+            scores = self._compute_typicality(embeddings[members])
+            scores[~unlabeled_member_mask] = -np.inf
+            chosen_idx = int(members[np.argmax(scores)])
 
             selected.append(chosen_idx)
             labeled_mask[chosen_idx] = True
