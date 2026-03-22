@@ -1,5 +1,4 @@
 seed: 42
-device: null
 
 paths:
   data_directory: "data"
