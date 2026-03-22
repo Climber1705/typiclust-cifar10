@@ -28,9 +28,9 @@ def plot_results(args: argparse.Namespace) -> None:
 
     df = pd.read_csv(data_directory / "al_results.csv")
 
-    plot_active_learning_results(df, figures_directory / "al_results.png")
-    plot_final_accuracy_results(df, figures_directory / "final_accuracy_results.png")
-    plot_phase_transition_results(df, figures_directory / "phase_transition_results.png")
+    plot_active_learning_results(df, figures_directory / f"al_results_{config.cluster.B}.png")
+    plot_final_accuracy_results(df, figures_directory / f"final_accuracy_results_{config.cluster.B}.png")
+    plot_phase_transition_results(df, figures_directory / f"phase_transition_results_{config.cluster.B}.png")
 
 if __name__ == "__main__":
     args = parse_args()
