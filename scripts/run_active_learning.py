@@ -76,38 +76,37 @@ def run_active_learning_pipeline(args: argparse.Namespace) -> None:
         print(f"Repetition {repetition_idx + 1}/{num_repetitions}")
 
         strategies = {name: fn() for name, fn in STRATEGIES.items()}
-        for strategy in strategies.values():
-            strategy.labeled = set()
-            strategy.accuracies = []
+        labeled_sets = {name: set() for name in strategies}
+        accuracies = {name: [] for name in strategies}
 
         for round_idx in range(num_rounds):
             print(f"=== Round {round_idx + 1}/{num_rounds} (B={config.cluster.B}) ===")
 
             for name, strategy in strategies.items():
                 state = State(
-                    labeled=strategy.labeled,
+                    labeled=labeled_sets[name],
                     dataset=inference_dataset,
                     embeddings=all_embeddings,
                     model=None,
                 )
 
                 new_indices = query_strategy(name, strategy, state, config, full_train_dataset, device)
-                strategy.labeled.update(new_indices)
+                labeled_sets[name].update(new_indices)
 
                 evaluation_model = train_classifier(
                     config=config.evaluation,
-                    labeled_indices=list(strategy.labeled),
+                    labeled_indices=list(labeled_sets[name]),
                     train_dataset=full_train_dataset,
                     device=device,
                 )
                 accuracy = evaluate_classifier(evaluation_model, test_loader, device)
-                strategy.accuracies.append(accuracy)
-                print(f"  {name:12s} | labeled={len(strategy.labeled):4d} | accuracy={accuracy:.4f}")
+                accuracies[name].append(accuracy)
+                print(f"  {name:12s} | labeled={len(labeled_sets[name]):4d} | accuracy={accuracy:.4f}")
 
-        for name, strategy in strategies.items():
-            all_results[name].append(strategy.accuracies)
+        for name in strategies:
+            all_results[name].append(accuracies[name])
         
-    save_results(all_results, data_directory)
+    save_results(all_results, data_directory, budget_per_round=config.cluster.B)
 
 if __name__ == "__main__":
     args = parse_args()
