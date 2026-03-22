@@ -8,6 +8,8 @@ class SimCLRModel(nn.Module):
     def __init__(self, feature_dimension: int = 128) -> None:
         super().__init__()
         self.base_encoder = torchvision.models.resnet18(weights=None)
+        self.base_encoder.conv1 = nn.Conv2d(3, 64, kernel_size=3, stride=1, padding=1, bias=False)
+        self.base_encoder.maxpool = nn.Identity()
         in_features = self.base_encoder.fc.in_features
         self.base_encoder.fc = nn.Identity()
 
