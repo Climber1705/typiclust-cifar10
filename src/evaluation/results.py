@@ -4,7 +4,7 @@ import pandas as pd
 from typing import Dict, Any
 from pathlib import Path
 
-def save_results(all_results: Dict[str, Any], data_directory: Path) -> None:
+def save_results(all_results: Dict[str, Any], data_directory: Path, budget_per_round: int = 10) -> None:
     rows = []
 
     for name, runs in all_results.items():
@@ -16,6 +16,7 @@ def save_results(all_results: Dict[str, Any], data_directory: Path) -> None:
             rows.append({
                 "strategy": name,
                 "round": i + 1,
+                "B": budget_per_round * (i + 1),
                 "mean": round(mean, 4),
                 "std_error": round(std_error, 4),
             })
