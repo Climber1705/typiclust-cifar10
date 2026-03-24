@@ -28,6 +28,10 @@ training:
   momentum: 0.9
   weight_decay: 0.0001
 
+  warmup_epochs: 10
+  start_factor: 1.0e-2
+  end_factor: 1.0
+
 # Classifer evaluation
 evaluation:
   epochs: 100
