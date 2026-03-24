@@ -31,6 +31,10 @@ class TrainingConfig:
     momentum: float
     weight_decay: float
 
+    warmup_epochs: int
+    start_factor: float
+    end_factor: float
+
 @dataclass
 class EvaluationConfig:
     epochs: int
