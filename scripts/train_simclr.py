@@ -37,9 +37,14 @@ def train_simclr_pipeline(args: argparse.Namespace) -> None:
         weight_decay=config.training.weight_decay,
     )
 
-    scheduler = optim.lr_scheduler.CosineAnnealingLR(
-        optimizer=optimizer,
-        T_max=config.training.epochs,
+    warmup_scheduler = optim.lr_scheduler.LinearLR(
+        optimizer, start_factor=config.training.start_factor, end_factor=config.training.end_factor, total_iters=config.training.warmup_epochs
+    )
+    cosine_scheduler = optim.lr_scheduler.CosineAnnealingLR(
+        optimizer, T_max=config.training.epochs - config.training.warmup_epochs
+    )
+    scheduler = optim.lr_scheduler.SequentialLR(
+        optimizer, schedulers=[warmup_scheduler, cosine_scheduler], milestones=[config.training.warmup_epochs]
     )
     criterion = SimCLRLoss()
 
