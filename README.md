@@ -24,5 +24,5 @@ python3 -m scripts.run_active_learning
 
 ## Plot Results
 ```bash
-python3 -m script.plot_results
+python3 -m scripts.plot_results
 ```
