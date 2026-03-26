@@ -1,0 +1,20 @@
+# Python
+.venv/
+__pycache__/
+
+# Data
+/data/*
+!/data/default/**
+!/data/budget_adaptive/**
+!data/.gitkeep
+
+# Models
+/models/*
+!/models/simclr_cifar10.pth
+!models/.gitkeep
+
+# Figures
+/figures/*
+!/figures/default/**
+!/figures/budget_adaptive/**
+!figures/.gitkeep
