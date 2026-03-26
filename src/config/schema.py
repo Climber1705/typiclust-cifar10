@@ -1,6 +1,6 @@
 import torch
 from dataclasses import dataclass
-from typing import Tuple
+from typing import Tuple, Optional
 
 @dataclass
 class PathsConfig:
@@ -51,11 +51,18 @@ class ClusterConfig:
     min_cluster_size: int
 
 @dataclass
+class ActiveLearningConfig:
+    num_rounds: int
+    num_repetitions: int
+
+@dataclass
 class Config:
     seed: int
     device: torch.device
+    device_override: Optional[str]
     paths: PathsConfig
     augmentation: AugmentationConfig
     training: TrainingConfig
     evaluation: EvaluationConfig
     cluster: ClusterConfig
+    active_learning: ActiveLearningConfig
