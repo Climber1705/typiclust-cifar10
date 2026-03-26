@@ -4,8 +4,8 @@ __pycache__/
 
 # Data
 /data/*
-!/data/default/
-!/data/budget_adaptive/
+!/data/default/**
+!/data/budget_adaptive/**
 !data/.gitkeep
 
 # Models
@@ -15,6 +15,6 @@ __pycache__/
 
 # Figures
 /figures/*
-!/figures/default/
-!/figures/budget_adaptive/
+!/figures/default/**
+!/figures/budget_adaptive/**
 !figures/.gitkeep
