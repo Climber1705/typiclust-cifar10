@@ -1,6 +1,5 @@
 import argparse
 import pandas as pd
-from pathlib import Path
 
 from src.config import load_config
 from src.evaluation import (
@@ -8,6 +7,7 @@ from src.evaluation import (
     plot_final_accuracy_results,
     plot_phase_transition_results,
 )
+from src.utils import get_project_root, get_directories
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
@@ -21,8 +21,8 @@ def parse_args() -> argparse.Namespace:
 
 def plot_results(args: argparse.Namespace) -> None:
     config = load_config(args.config)
-    project_root = Path(__file__).resolve().parent.parent
-    data_directory = project_root / config.paths.data_directory
+    project_root = get_project_root()
+    data_directory, _ = get_directories(config)
     figures_directory = project_root / "figures"
     figures_directory.mkdir(parents=True, exist_ok=True)
 
