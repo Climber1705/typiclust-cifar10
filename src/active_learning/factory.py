@@ -1,6 +1,7 @@
 from src.active_learning.strategies import (
     BADGEStrategy,
     BALDStrategy,
+    BudgetAdaptiveTypiClust,
     CoreSetStrategy,
     DBALStrategy,
     EntropyStrategy,
@@ -10,9 +11,20 @@ from src.active_learning.strategies import (
     UncertaintyStrategy,
 )
 
+n_classes = 10
+k = 20
+steepness = 0.1
+default_factor = 5.0
 
 def build_strategies(config):
     return {
+        "BudgetAdaptiveTypiClust": lambda: BudgetAdaptiveTypiClust(
+            n_classes=n_classes,
+            k=k,
+            max_clusters=config.cluster.max_clusters,
+            steepness=steepness,
+            default_factor=default_factor,
+        ),
         "TPC_RP": lambda: TypiclustStrategy(
             seed=config.seed,
             max_clusters=config.cluster.max_clusters,
@@ -26,4 +38,5 @@ def build_strategies(config):
         "CoreSet": lambda: CoreSetStrategy(),
         "BALD": lambda: BALDStrategy(),
         "BADGE": lambda: BADGEStrategy(),
+        
     }
