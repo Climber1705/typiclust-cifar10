@@ -1,5 +1,9 @@
 seed: 42
 
+# Optional. If omitted, device auto-selects cuda if available.
+# Examples: "cpu", "cuda", "cuda:0"
+# device: "cuda"
+
 paths:
   data_directory: "data"
   model_directory: "models"
@@ -46,3 +50,7 @@ cluster:
   max_clusters: 500
   B: 10
   min_cluster_size: 5
+
+active_learning:
+  num_rounds: 6
+  num_repetitions: 10
