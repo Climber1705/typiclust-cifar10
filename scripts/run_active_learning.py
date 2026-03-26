@@ -79,6 +79,8 @@ def run_active_learning_pipeline(args: argparse.Namespace) -> None:
         labeled_sets = {name: set() for name in strategies}
         accuracies = {name: [] for name in strategies}
 
+        trained_models = {name: None for name in strategies}
+
         for round_idx in range(num_rounds):
             print(f"=== Round {round_idx + 1}/{num_rounds} (B={config.cluster.B}) ===")
 
@@ -87,7 +89,7 @@ def run_active_learning_pipeline(args: argparse.Namespace) -> None:
                     labeled=labeled_sets[name],
                     dataset=inference_dataset,
                     embeddings=all_embeddings,
-                    model=None,
+                    model=trained_models[name], # None on round 0
                 )
 
                 new_indices = query_strategy(name, strategy, state, config, full_train_dataset, device)
@@ -101,7 +103,20 @@ def run_active_learning_pipeline(args: argparse.Namespace) -> None:
                 )
                 accuracy = evaluate_classifier(evaluation_model, test_loader, device)
                 accuracies[name].append(accuracy)
-                print(f"  {name:12s} | labeled={len(labeled_sets[name]):4d} | accuracy={accuracy:.4f}")
+                trained_models[name] = evaluation_model
+                
+                if hasattr(strategy, "update_accuracy"):
+                    strategy.update_accuracy(accuracy)
+
+                print(
+                    f"  {name:20s} | labeled={len(labeled_sets[name]):4d}"
+                    f" | accuracy={accuracy:.4f}"
+                    + (
+                        f" | ?={strategy.current_lambda:.3f}"
+                        f" | m0={strategy.m0_estimate:.1f}"
+                        if hasattr(strategy, "current_lambda") else ""
+                    )
+                )
 
         for name in strategies:
             all_results[name].append(accuracies[name])
