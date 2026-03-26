@@ -65,10 +65,16 @@ def run_active_learning_pipeline(args: argparse.Namespace) -> None:
 
     STRATEGIES = build_strategies(config)
 
-    num_rounds = 6
-    num_repetitions = 10
+    num_rounds = config.active_learning.num_rounds
+    num_repetitions = config.active_learning.num_repetitions
 
-    all_embeddings = np.load(data_directory / "embeddings.npy")
+    embeddings_path = data_directory / "embeddings.npy"
+    if not embeddings_path.exists():
+        raise FileNotFoundError(
+            f"Missing embeddings at {embeddings_path}. "
+            "Run `python3 -m scripts.build_embeddings` first."
+        )
+    all_embeddings = np.load(embeddings_path)
 
     all_results = {name: [] for name in STRATEGIES}
 
