@@ -5,6 +5,7 @@ from .schema import (
     TrainingConfig,
     EvaluationConfig,
     ClusterConfig,
+    ActiveLearningConfig,
     Config,
 )
 
@@ -15,5 +16,6 @@ __all__ = [
     "TrainingConfig",
     "EvaluationConfig",
     "ClusterConfig",
+    "ActiveLearningConfig",
     "Config",
 ]
