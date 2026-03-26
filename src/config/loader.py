@@ -10,15 +10,23 @@ from .schema import (
     EvaluationConfig,
     AugmentationConfig,
     ClusterConfig,
+    ActiveLearningConfig,
 )
 
 def load_config(path: Union[str, Path]) -> Config:
     with open(path, "r") as f:
         raw = yaml.safe_load(f)
 
+    device_override = raw.get("device")
+    if device_override is None:
+        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    else:
+        device = torch.device(device_override)
+
     return Config(
         seed=raw["seed"],
-        device=torch.device("cuda" if torch.cuda.is_available() else "cpu"),
+        device=device,
+        device_override=device_override,
 
         paths=PathsConfig(
             data_directory=raw["paths"]["data_directory"],
@@ -45,4 +53,9 @@ def load_config(path: Union[str, Path]) -> Config:
         ),
 
         cluster=ClusterConfig(**raw["cluster"]),
+
+        active_learning=ActiveLearningConfig(
+            num_rounds=raw.get("active_learning", {}).get("num_rounds", 6),
+            num_repetitions=raw.get("active_learning", {}).get("num_repetitions", 10),
+        ),
     )
