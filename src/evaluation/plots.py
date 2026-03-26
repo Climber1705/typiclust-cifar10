@@ -3,6 +3,7 @@ import pandas as pd
 from pathlib import Path
 
 NAME_COLOURS = {
+    "BudgetAdaptiveTypiClust": "purple",
     "TPC_RP": "blue",           
     "Random": "black",
     "Uncertainty": "red",
